@@ -1,0 +1,15 @@
+on:
+  push:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/setup-node@v1
+      with:
+        registry-url: https://npm.pkg.github.com
+    - run: npm init --scope ${{ github.repository_owner }} -y
+    - run: npm publish
+      env:
+        NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
