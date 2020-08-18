@@ -10,6 +10,12 @@ jobs:
       with:
         registry-url: https://npm.pkg.github.com
     - run: npm init --scope ${{ github.repository_owner }} -y
+
     - run: npm publish
       env:
         NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Delete packages
+      run: |
+        dotnet tool install gpr -g
+        gpr delete ${{ github.repository }} --force -k ${{ secrets.GITHUB_TOKEN }}
