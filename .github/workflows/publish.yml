@@ -21,4 +21,4 @@ jobs:
         dotnet tool install gpr -g
         gpr delete ${{ github.repository }} --force -k ${{ secrets.GITHUB_TOKEN }}
       env:
-        DOTNET_CLI_TELEMETRY_OPTOUT: true
+        DOTNET_NOLOGO: true
