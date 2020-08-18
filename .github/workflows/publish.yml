@@ -12,6 +12,7 @@ jobs:
     - run: npm init --scope ${{ github.repository_owner }} -y
 
     - run: npm publish
+      continue-on-error: true
       env:
         NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
