@@ -7,6 +7,10 @@ inputs:
   version:
     description: 'Version of package to delete'
     required: true
+  owner:
+    description: 'Owner of package to delete'
+    required: false
+    default: ${{ github.repository_owner }}
   token:
     description: 'Personal access token to use'
     required: false
@@ -21,7 +25,7 @@ runs:
           -s \
           -H "Accept: application/vnd.github.v3+json" \
           -H "Authorization: bearer ${{ inputs.token }}" \
-          -d '{"query": "query {user(login: \"token\") { packages(first: 1, names: \"${{ inputs.name }}\") { nodes { version(version: \"${{ inputs.version }}\") { id } } } } }"}' \
+          -d '{"query": "query {user(login: \"${{ inputs.owner }}\") { packages(first: 1, names: \"${{ inputs.name }}\") { nodes { version(version: \"${{ inputs.version }}\") { id } } } } }"}' \
           -o /tmp/query_response.json \
           --url https://api.github.com/graphql
     - name: Set version id as output
