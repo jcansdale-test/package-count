@@ -15,6 +15,7 @@ runs:
   using: "composite"
   steps:
     - name: Fetch package version id
+      shell: bash
       run: |
         curl -X POST \
           -s \
@@ -25,6 +26,7 @@ runs:
           --url https://api.github.com/graphql
     - name: Set version id as output
       id: version
+      shell: bash
       run: printf "::set-output name=id::%s" $(cat /tmp/query_response.json | jq '.data.user.packages.nodes[0].version.id' | sed -e 's/^\"//' -e 's/\"$//')
     - name: Delete package version by id
       run: |
@@ -36,4 +38,5 @@ runs:
           -o /tmp/mutation_response.json \
           --url https://api.github.com/graphql
     - name: Delete package version outcome
+      shell: bash
       run: echo $(cat /tmp/mutation_response.json)
