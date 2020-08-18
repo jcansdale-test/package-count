@@ -17,8 +17,7 @@ jobs:
         NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Delete packages
-      run: |
-        dotnet tool install gpr -g
-        gpr delete ${{ github.repository }} --force -k ${{ secrets.GITHUB_TOKEN }}
-      env:
-        DOTNET_NOLOGO: true
+      uses: ./.github/actions/delete-package-version
+      with:
+        name: package-count
+        version: 1.0.0
