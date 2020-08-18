@@ -29,6 +29,7 @@ runs:
       shell: bash
       run: printf "::set-output name=id::%s" $(cat /tmp/query_response.json | jq '.data.user.packages.nodes[0].version.id' | sed -e 's/^\"//' -e 's/\"$//')
     - name: Delete package version by id
+      shell: bash
       run: |
         curl -X POST \
           -s \
